@@ -5,6 +5,7 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SVGアニメーション ジェネレーター</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/generator.css">
 </head>
@@ -15,11 +16,11 @@
       <h1>SVGアニメーション<br>ジェネレーター</h1>
 
       <section class="control-group">
-        <h2>feTurbulence</h2>
+        <h2><i class="fa-solid fa-wave-square"></i> feTurbulence</h2>
         <p class="control-group-desc">ノイズパターンを生成するフィルター。波打つ効果の「元」となる模様を制御します。</p>
         <div class="control">
           <label>
-            baseFrequency
+            <i class="fa-solid fa-sliders"></i> baseFrequency
             <span class="value" id="baseFrequency-value">0.02</span>
           </label>
           <input type="range" id="baseFrequency" min="0.001" max="0.2" step="0.001" value="0.02">
@@ -27,60 +28,63 @@
         </div>
         <div class="control">
           <label>
-            numOctaves
+            <i class="fa-solid fa-layer-group"></i> numOctaves
             <span class="value" id="numOctaves-value">3</span>
           </label>
           <input type="range" id="numOctaves" min="1" max="10" step="1" value="3">
           <p class="control-desc">ノイズの重ね合わせ数。多いほど複雑でディテールの多い模様になります。</p>
         </div>
         <div class="control">
-          <label>
-            type
-            <span class="value" id="turbulenceType-value">fractalNoise</span>
-          </label>
-          <select id="turbulenceType">
-            <option value="fractalNoise">fractalNoise</option>
-            <option value="turbulence">turbulence</option>
-          </select>
+          <label><i class="fa-solid fa-toggle-on"></i> type</label>
+          <div class="radio-group">
+            <label class="radio-option">
+              <input type="radio" name="turbulenceType" value="fractalNoise" checked>
+              fractalNoise
+            </label>
+            <label class="radio-option">
+              <input type="radio" name="turbulenceType" value="turbulence">
+              turbulence
+            </label>
+          </div>
           <p class="control-desc">fractalNoiseは滑らかで柔らかいノイズ、turbulenceは荒く激しいノイズになります。</p>
         </div>
       </section>
 
       <section class="control-group">
-        <h2>feDisplacementMap scale</h2>
+        <h2><i class="fa-solid fa-arrows-up-down-left-right"></i> feDisplacementMap scale</h2>
         <p class="control-group-desc">ノイズに基づいて画像を変形する強さ。アニメーションは5つのキーフレーム（0%・25%・50%・75%・100%）で切り替わります。</p>
         <div class="control" data-filter="0">
-          <label>Filter 0（0%） <span class="value" id="scale0-value">2</span></label>
+          <label><i class="fa-solid fa-circle"></i> Filter 0（0%） <span class="value" id="scale0-value">2</span></label>
           <input type="range" id="scale0" min="0" max="50" step="1" value="2">
           <p class="control-desc">開始時の変形量。0で変形なし。</p>
         </div>
         <div class="control" data-filter="1">
-          <label>Filter 1（25%） <span class="value" id="scale1-value">6</span></label>
+          <label><i class="fa-solid fa-circle"></i> Filter 1（25%） <span class="value" id="scale1-value">6</span></label>
           <input type="range" id="scale1" min="0" max="50" step="1" value="6">
           <p class="control-desc">1/4地点の変形量。大きいほど波打ちが強く。</p>
         </div>
         <div class="control" data-filter="2">
-          <label>Filter 2（50%） <span class="value" id="scale2-value">3</span></label>
+          <label><i class="fa-solid fa-circle"></i> Filter 2（50%） <span class="value" id="scale2-value">3</span></label>
           <input type="range" id="scale2" min="0" max="50" step="1" value="3">
           <p class="control-desc">中間地点の変形量。</p>
         </div>
         <div class="control" data-filter="3">
-          <label>Filter 3（75%） <span class="value" id="scale3-value">4</span></label>
+          <label><i class="fa-solid fa-circle"></i> Filter 3（75%） <span class="value" id="scale3-value">4</span></label>
           <input type="range" id="scale3" min="0" max="50" step="1" value="4">
           <p class="control-desc">3/4地点の変形量。</p>
         </div>
         <div class="control" data-filter="4">
-          <label>Filter 4（100%） <span class="value" id="scale4-value">3</span></label>
+          <label><i class="fa-solid fa-circle"></i> Filter 4（100%） <span class="value" id="scale4-value">3</span></label>
           <input type="range" id="scale4" min="0" max="50" step="1" value="3">
           <p class="control-desc">終了時の変形量。0にすると開始に戻る動きに。</p>
         </div>
       </section>
 
       <section class="control-group">
-        <h2>画像</h2>
+        <h2><i class="fa-solid fa-image"></i> 画像</h2>
         <div class="control">
           <label class="upload-label">
-            <span class="upload-btn">SVGをアップロード</span>
+            <span class="upload-btn"><i class="fa-solid fa-upload"></i> SVGをアップロード</span>
             <input type="file" id="svgUpload" accept=".svg,image/svg+xml" style="display:none">
           </label>
           <p class="control-desc">別の.svgファイルを読み込んでプレビュー・ダウンロードできます。</p>
@@ -88,10 +92,10 @@
       </section>
 
       <section class="control-group">
-        <h2>表示</h2>
+        <h2><i class="fa-solid fa-display"></i> 表示</h2>
         <div class="control">
           <label>
-            画像の横幅（px）
+            <i class="fa-solid fa-arrows-left-right"></i> 画像の横幅（px）
             <span class="value" id="imgWidth-value">100</span>
           </label>
           <input type="range" id="imgWidth" min="40" max="300" step="5" value="100">
@@ -100,10 +104,10 @@
       </section>
 
       <section class="control-group">
-        <h2>アニメーション</h2>
+        <h2><i class="fa-solid fa-play"></i> アニメーション</h2>
         <div class="control">
           <label>
-            再生時間（秒）
+            <i class="fa-solid fa-clock"></i> 再生時間（秒）
             <span class="value" id="duration-value">0.5</span>
           </label>
           <input type="range" id="duration" min="0.1" max="3" step="0.1" value="0.5">
@@ -112,14 +116,14 @@
         <div class="control">
           <label>
             <input type="checkbox" id="infinite" checked>
-            無限ループ
+            <i class="fa-solid fa-repeat"></i> 無限ループ
           </label>
           <p class="control-desc">オンで繰り返し再生、オフで1回のみ再生します。</p>
         </div>
       </section>
 
       <section class="control-group actions">
-        <button type="button" id="reset">リセット</button>
+        <button type="button" id="reset"><i class="fa-solid fa-rotate-left"></i> リセット</button>
       </section>
     </aside>
 

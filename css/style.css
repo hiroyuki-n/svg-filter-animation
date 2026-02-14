@@ -1,10 +1,12 @@
+/* Base reset & fallback keyframes (overridden by generator.js) */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-svg {
+/* Hidden until filters are injected */
+#svg-container svg {
   display: none;
 }
 
@@ -14,15 +16,6 @@ svg {
   50% { filter: url(#svg_filter_2); }
   75% { filter: url(#svg_filter_3); }
   100% { filter: url(#svg_filter_4); }
-}
-
-body {
-  background: #f6f1eb;
-  min-height: 100vh;
-}
-
-.icons-section {
-  padding: 60px 20px;
 }
 
 .heading {
@@ -36,5 +29,4 @@ body {
   width: 100px;
   aspect-ratio: 10/6;
   object-fit: contain;
-  animation: svg_filter 0.5s infinite;
 }

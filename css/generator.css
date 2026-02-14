@@ -1,4 +1,34 @@
+/* ===== CSS Variables ===== */
+:root {
+  --color-bg: #1a1a2e;
+  --color-bg-controls: #16213e;
+  --color-bg-input: #334155;
+  --color-border: #475569;
+  --color-text: #eee;
+  --color-text-muted: #94a3b8;
+  --color-text-dim: #64748b;
+  --color-accent: #3b82f6;
+  --color-value: #fbbf24;
+  --color-code-bg: #0f172a;
+  --color-preview-bg: #f6f1eb;
+  --radius-sm: 6px;
+  --radius-md: 8px;
+  --radius-lg: 16px;
+  --spacing-sm: 8px;
+  --spacing-md: 16px;
+  --spacing-lg: 24px;
+}
+
+/* ===== Base ===== */
 html {
+  overflow-x: hidden;
+}
+
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  background: var(--color-bg);
+  color: var(--color-text);
+  min-height: 100vh;
   overflow-x: hidden;
 }
 
@@ -10,14 +40,7 @@ html {
   overflow: hidden;
 }
 
-body {
-  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
-  background: #1a1a2e;
-  color: #eee;
-  min-height: 100vh;
-  overflow-x: hidden;
-}
-
+/* ===== Layout ===== */
 .generator {
   display: flex;
   min-height: 100vh;
@@ -26,34 +49,47 @@ body {
 
 .controls {
   width: 320px;
-  padding: 24px;
-  background: #16213e;
+  padding: var(--spacing-lg);
+  background: var(--color-bg-controls);
   overflow-y: auto;
 }
 
-.controls h1 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: 24px;
-  line-height: 1.4;
+.preview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-width: 0;
 }
 
+/* ===== Control Groups ===== */
 .control-group {
-  margin-bottom: 24px;
+  margin-bottom: var(--spacing-lg);
 }
 
 .control-group h2 {
+  display: flex;
+  align-items: center;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
   letter-spacing: 0.05em;
-  color: #94a3b8;
-  margin-bottom: 8px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-sm);
+}
+
+.control-group h2 i {
+  margin-right: 6px;
+  opacity: 0.8;
+  width: 1em;
 }
 
 .control-group-desc {
   font-size: 0.75rem;
-  color: #64748b;
+  color: var(--color-text-dim);
   line-height: 1.5;
   margin-bottom: 12px;
 }
@@ -70,25 +106,39 @@ body {
   margin-bottom: 4px;
 }
 
+.control label > i:first-child {
+  margin-right: 6px;
+  opacity: 0.8;
+  width: 1em;
+}
+
+.control label i:not(:first-child) {
+  margin-left: 4px;
+  margin-right: 6px;
+  opacity: 0.8;
+  width: 1em;
+}
+
 .control .value {
   font-family: monospace;
   font-size: 0.8rem;
-  color: #fbbf24;
+  color: var(--color-value);
 }
 
 .control-desc {
   font-size: 0.7rem;
-  color: #64748b;
+  color: var(--color-text-dim);
   line-height: 1.4;
   margin-top: 6px;
 }
 
+/* ===== Form Controls ===== */
 .control input[type="range"] {
   width: 100%;
   height: 6px;
   -webkit-appearance: none;
   appearance: none;
-  background: #334155;
+  background: var(--color-bg-input);
   border-radius: 3px;
 }
 
@@ -96,58 +146,96 @@ body {
   -webkit-appearance: none;
   width: 16px;
   height: 16px;
-  background: #3b82f6;
+  background: var(--color-accent);
   border-radius: 50%;
   cursor: pointer;
 }
 
 .control input[type="checkbox"] {
-  margin-right: 8px;
+  margin-right: var(--spacing-sm);
   cursor: pointer;
 }
 
 .control select {
   width: 100%;
-  padding: 8px 12px;
+  padding: var(--spacing-sm) 12px;
   font-size: 0.875rem;
-  background: #334155;
+  background: var(--color-bg-input);
   color: #e2e8f0;
-  border: 1px solid #475569;
-  border-radius: 6px;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
+/* ===== Radio Group ===== */
+.radio-group {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.radio-option {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--spacing-sm) 14px;
+  font-size: 0.875rem;
+  background: var(--color-bg-input);
+  color: #e2e8f0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.radio-option:hover {
+  background: var(--color-border);
+}
+
+.radio-option:has(input:checked) {
+  border-color: var(--color-accent);
+  background: rgba(59, 130, 246, 0.15);
+  color: var(--color-accent);
+}
+
+/* ===== Upload ===== */
 .upload-label {
   display: block;
   cursor: pointer;
 }
 
 .upload-btn {
-  display: inline-block;
-  padding: 8px 16px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: var(--spacing-sm) var(--spacing-md);
   font-size: 0.875rem;
-  background: #3b82f6;
+  background: var(--color-accent);
   color: #fff;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
 }
 
 .upload-btn:hover {
   opacity: 0.9;
 }
 
+/* ===== Actions ===== */
 .actions {
   display: flex;
-  gap: 8px;
-  margin-top: 24px;
+  gap: var(--spacing-sm);
+  margin-top: var(--spacing-lg);
 }
 
 .actions button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
   flex: 1;
-  padding: 10px 16px;
+  padding: 10px var(--spacing-md);
   font-size: 0.875rem;
   font-weight: 500;
   border: none;
-  border-radius: 8px;
+  border-radius: var(--radius-md);
   cursor: pointer;
   transition: opacity 0.2s;
 }
@@ -157,25 +245,22 @@ body {
 }
 
 #reset {
-  background: #475569;
+  background: var(--color-border);
   color: #fff;
 }
 
-.preview {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  padding: 40px;
-  overflow-x: hidden;
-  overflow-y: auto;
-  min-width: 0;
+/* ===== Preview Section ===== */
+.controls h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.4;
 }
 
 .preview .icons-section {
-  background: #f6f1eb;
+  background: var(--color-preview-bg);
   padding: 60px;
-  border-radius: 16px;
+  border-radius: var(--radius-lg);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 }
 
@@ -186,7 +271,7 @@ body {
   gap: 30px;
   margin-top: 20px;
   padding-top: 20px;
-  border-top: 1px dashed #94a3b8;
+  border-top: 1px dashed var(--color-text-muted);
 }
 
 .uploaded-preview img {
@@ -195,19 +280,16 @@ body {
   object-fit: contain;
 }
 
-.download-uploaded {
-  margin-bottom: 16px;
-}
-
 .hint {
-  margin-top: 24px;
+  margin-top: var(--spacing-lg);
   font-size: 0.875rem;
-  color: #94a3b8;
+  color: var(--color-text-muted);
 }
 
+/* ===== Code Copy Section ===== */
 .code-copy-section {
   width: 100%;
-  max-width: 640px;
+  max-width: 900px;
   margin-top: 40px;
   min-width: 0;
 }
@@ -215,8 +297,8 @@ body {
 .code-copy-section h3 {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #94a3b8;
-  margin-bottom: 16px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-md);
 }
 
 .code-block {
@@ -225,14 +307,14 @@ body {
 
 .code-block .code-label {
   font-size: 0.75rem;
-  color: #64748b;
+  color: var(--color-text-dim);
   margin-bottom: 6px;
 }
 
 .code-block pre {
-  background: #0f172a;
-  border-radius: 8px;
-  padding: 16px;
+  background: var(--color-code-bg);
+  border-radius: var(--radius-md);
+  padding: var(--spacing-md);
   overflow-x: hidden;
   font-family: "Monaco", "Menlo", "Consolas", monospace;
   font-size: 0.8rem;
@@ -246,13 +328,13 @@ body {
 }
 
 .code-block .copy-btn {
-  margin-top: 8px;
+  margin-top: var(--spacing-sm);
   padding: 6px 14px;
   font-size: 0.8rem;
-  background: #3b82f6;
+  background: var(--color-accent);
   color: #fff;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
@@ -260,6 +342,7 @@ body {
   opacity: 0.9;
 }
 
+/* ===== Download Section ===== */
 .download-section {
   width: 100%;
   max-width: 640px;
@@ -270,34 +353,38 @@ body {
 .download-section h3 {
   font-size: 0.875rem;
   font-weight: 600;
-  color: #94a3b8;
-  margin-bottom: 8px;
+  color: var(--color-text-muted);
+  margin-bottom: var(--spacing-sm);
 }
 
 .download-hint {
   font-size: 0.8rem;
-  color: #64748b;
-  margin-bottom: 16px;
+  color: var(--color-text-dim);
+  margin-bottom: var(--spacing-md);
+}
+
+.download-uploaded {
+  margin-bottom: var(--spacing-md);
 }
 
 .download-buttons {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: var(--spacing-sm);
 }
 
 .download-btn {
-  padding: 8px 14px;
+  padding: var(--spacing-sm) 14px;
   font-size: 0.8rem;
-  background: #334155;
+  background: var(--color-bg-input);
   color: #e2e8f0;
   border: none;
-  border-radius: 6px;
+  border-radius: var(--radius-sm);
   cursor: pointer;
 }
 
 .download-btn:hover:not(:disabled) {
-  background: #475569;
+  background: var(--color-border);
 }
 
 .download-btn:disabled {
@@ -305,6 +392,7 @@ body {
   cursor: not-allowed;
 }
 
+/* ===== Responsive ===== */
 @media (max-width: 768px) {
   .generator {
     flex-direction: column;
