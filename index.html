@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>SVGアニメーション ジェネレーター</title>
+  <title>SVG Filter Animation</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
   <link rel="stylesheet" href="css/style.css">
   <link rel="stylesheet" href="css/generator.css">
@@ -13,8 +13,6 @@
 <body>
   <div class="generator">
     <aside class="controls">
-      <h1>SVGアニメーション<br>ジェネレーター</h1>
-
       <section class="control-group preset-group">
         <h2><i class="fa-solid fa-sliders"></i> プリセット</h2>
         <div class="preset-buttons">
@@ -96,9 +94,9 @@
         <div class="control">
           <label>
             <i class="fa-solid fa-arrows-left-right"></i> 画像の横幅（px）
-            <span class="value" id="imgWidth-value">100</span>
+            <span class="value" id="imgWidth-value">200</span>
           </label>
-          <input type="range" id="imgWidth" min="40" max="600" step="5" value="100">
+          <input type="range" id="imgWidth" min="40" max="600" step="5" value="200">
           <p class="control-desc">プレビューアイコンの表示サイズ。生成コードにも反映されます。</p>
         </div>
       </section>
@@ -127,8 +125,6 @@
             <span class="upload-btn"><i class="fa-solid fa-upload"></i> SVGをアップロード</span>
             <input type="file" id="svgUpload" class="visually-hidden" accept=".svg,image/svg+xml" aria-label="SVGファイルをアップロード">
           </label>
-          <p class="upload-status" id="upload-status">選択されていません</p>
-          <p class="upload-desc">別の.svgファイルを読み込んでプレビュー・ダウンロードできます。</p>
         </div>
       </section>
 

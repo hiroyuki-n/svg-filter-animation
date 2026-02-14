@@ -317,18 +317,6 @@ body {
   display: inline-block;
 }
 
-.upload-status {
-  font-size: 0.875rem;
-  color: var(--color-text-dim);
-  margin: var(--spacing-sm) 0 4px;
-}
-
-.upload-desc {
-  font-size: 0.8rem;
-  color: var(--color-text-dim);
-  margin: 0;
-}
-
 .heading {
   display: flex;
   flex-wrap: wrap;

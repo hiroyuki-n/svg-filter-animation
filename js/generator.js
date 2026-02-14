@@ -16,7 +16,7 @@
     scales: [2, 6, 3, 4, 3],
     duration: 0.5,
     infinite: true,
-    imgWidth: 100,
+    imgWidth: 200,
   };
 
   const PRESETS = {
@@ -25,35 +25,35 @@
       numOctaves: 2,
       turbulenceType: "fractalNoise",
       scales: [0, 2, 1, 2, 1],
-      imgWidth: 100,
+      imgWidth: 200,
     },
     strength2: {
       baseFrequency: 0.03,
       numOctaves: 2,
       turbulenceType: "fractalNoise",
       scales: [1, 4, 2, 3, 2],
-      imgWidth: 100,
+      imgWidth: 200,
     },
     strength3: {
       baseFrequency: 0.05,
       numOctaves: 3,
       turbulenceType: "fractalNoise",
       scales: [2, 6, 3, 5, 4],
-      imgWidth: 100,
+      imgWidth: 200,
     },
     strength4: {
       baseFrequency: 0.06,
       numOctaves: 4,
       turbulenceType: "fractalNoise",
       scales: [4, 10, 6, 9, 6],
-      imgWidth: 100,
+      imgWidth: 200,
     },
     strength5: {
       baseFrequency: 0.08,
       numOctaves: 6,
       turbulenceType: "turbulence",
       scales: [8, 18, 12, 16, 10],
-      imgWidth: 100,
+      imgWidth: 200,
     },
   };
 
@@ -360,12 +360,6 @@ ${getKeyframesCss()}
     });
   }
 
-  function updateUploadStatus() {
-    const el = $("#upload-status");
-    if (!el) return;
-    el.textContent = uploadedSvgData ? uploadedSvgData.name : "選択されていません";
-  }
-
   function handleSvgUpload(e) {
     const file = e.target.files?.[0];
     if (!file || !file.name.toLowerCase().endsWith(".svg")) return;
@@ -384,7 +378,6 @@ ${getKeyframesCss()}
         img.alt = file.name;
         heading.appendChild(img);
       }
-      updateUploadStatus();
       updateDownloadButtons();
       apply();
     };
@@ -462,7 +455,6 @@ ${getKeyframesCss()}
     $("#svgUpload")?.addEventListener("change", handleSvgUpload);
 
     initPreviewHeading();
-    updateUploadStatus();
     updateDownloadButtons();
     apply();
   }
