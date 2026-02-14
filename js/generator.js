@@ -249,8 +249,8 @@ ${getKeyframesCss()}
   }
 
   async function downloadSvg(src, btnEl) {
-    const origText = btnEl.textContent;
-    btnEl.textContent = "生成中...";
+    const origHtml = btnEl.innerHTML;
+    btnEl.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> 生成中...';
     btnEl.disabled = true;
 
     try {
@@ -261,10 +261,10 @@ ${getKeyframesCss()}
       triggerDownload(animated, src.replace("img/", "animated_"));
     } catch (err) {
       console.error(err);
-      btnEl.textContent = "エラー";
+      btnEl.innerHTML = '<i class="fa-solid fa-triangle-exclamation"></i> エラー';
     }
 
-    btnEl.textContent = origText;
+    btnEl.innerHTML = origHtml;
     btnEl.disabled = false;
   }
 
@@ -415,17 +415,17 @@ ${getKeyframesCss()}
     btn.className = "download-btn";
 
     if (uploadedSvgData) {
-      btn.textContent = "アップロード画像をダウンロード";
+      btn.innerHTML = '<i class="fa-solid fa-download"></i> ダウンロード';
       btn.addEventListener("click", () =>
         downloadSvgFromText(uploadedSvgData.text, uploadedSvgData.name)
       );
     } else if (currentPresetSrc) {
-      btn.textContent = currentPresetSrc.replace("img/", "");
+      btn.innerHTML = '<i class="fa-solid fa-download"></i> ダウンロード';
       btn.setAttribute("data-src", currentPresetSrc);
       btn.addEventListener("click", () => downloadSvg(currentPresetSrc, btn));
     }
 
-    if (btn.textContent) container.appendChild(btn);
+    if (btn.innerHTML) container.appendChild(btn);
   }
 
   function init() {

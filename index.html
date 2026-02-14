@@ -120,11 +120,32 @@
     <main class="preview">
       <section class="icons-section">
         <div class="heading" id="preview-heading"></div>
-        <div class="preview-upload">
-          <label class="upload-label" for="svgUpload">
-            <span class="upload-btn"><i class="fa-solid fa-upload"></i> SVGをアップロード</span>
-            <input type="file" id="svgUpload" class="visually-hidden" accept=".svg,image/svg+xml" aria-label="SVGファイルをアップロード">
-          </label>
+      </section>
+
+      <div class="preview-upload">
+        <label class="upload-label" for="svgUpload">
+          <span class="upload-btn"><i class="fa-solid fa-upload"></i> SVGをアップロード</span>
+          <input type="file" id="svgUpload" class="visually-hidden" accept=".svg,image/svg+xml" aria-label="SVGファイルをアップロード">
+        </label>
+        <div class="download-buttons" id="download-buttons"></div>
+      </div>
+
+      <section class="code-copy-section">
+        <h3><i class="fa-solid fa-code"></i> HTML / CSS をコピー</h3>
+        <p class="section-desc">Webページに組み込む場合に使います。HTML（フィルター定義）を&lt;/body&gt;直前に、CSS（アニメーション）をスタイルシートに貼り付けて、既存の<code>img</code>タグに適用します。画像ファイルは別途用意してください。</p>
+        <div class="code-block">
+          <div class="code-label-row">
+            <p class="code-label">HTML（&lt;/body&gt;直前に配置）</p>
+            <button type="button" class="copy-btn" id="copy-html"><i class="fa-solid fa-copy"></i> コピー</button>
+          </div>
+          <pre id="code-html"><code></code></pre>
+        </div>
+        <div class="code-block">
+          <div class="code-label-row">
+            <p class="code-label">CSS</p>
+            <button type="button" class="copy-btn" id="copy-css"><i class="fa-solid fa-copy"></i> コピー</button>
+          </div>
+          <pre id="code-css"><code></code></pre>
         </div>
       </section>
 
@@ -135,31 +156,6 @@
           <li><strong>SVGをダウンロード</strong> … 1つのファイルで完結させたいとき。どこにでもそのまま配置可能。</li>
         </ul>
       </div>
-
-      <section class="code-copy-section">
-        <h3><i class="fa-solid fa-code"></i> HTML / CSS をコピー</h3>
-        <p class="section-desc">Webページに組み込む場合に使います。HTML（フィルター定義）を&lt;/body&gt;直前に、CSS（アニメーション）をスタイルシートに貼り付けて、既存の<code>img</code>タグに適用します。画像ファイルは別途用意してください。</p>
-        <div class="code-block">
-          <div class="code-label-row">
-            <p class="code-label"><i class="fa-brands fa-html5"></i> HTML（&lt;/body&gt;直前に配置）</p>
-            <button type="button" class="copy-btn" id="copy-html"><i class="fa-solid fa-copy"></i> コピー</button>
-          </div>
-          <pre id="code-html"><code></code></pre>
-        </div>
-        <div class="code-block">
-          <div class="code-label-row">
-            <p class="code-label"><i class="fa-brands fa-css3-alt"></i> CSS</p>
-            <button type="button" class="copy-btn" id="copy-css"><i class="fa-solid fa-copy"></i> コピー</button>
-          </div>
-          <pre id="code-css"><code></code></pre>
-        </div>
-      </section>
-
-      <section class="download-section">
-        <h3><i class="fa-solid fa-file-arrow-down"></i> SVGをダウンロード</h3>
-        <p class="section-desc">アニメーションが埋め込まれた.svgファイルを取得します。単体で再生でき、<code>img</code>のsrc・背景画像・メール添付など、どこでもそのまま使えます。HTML/CSSの追加は不要です。</p>
-        <div class="download-buttons" id="download-buttons"></div>
-      </section>
 
     </main>
   </div>
