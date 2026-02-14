@@ -53,7 +53,7 @@ body {
 }
 
 .controls {
-  width: 320px;
+  width: 400px;
   padding: var(--spacing-lg);
   background: var(--color-bg-controls);
   overflow-y: auto;
@@ -420,7 +420,10 @@ body {
 }
 
 .code-block .code-label {
-  font-size: 0.75rem;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.875rem;
   color: var(--color-text-dim);
   margin: 0;
 }
