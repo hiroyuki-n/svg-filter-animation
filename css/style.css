@@ -1,11 +1,10 @@
-/* Base reset & fallback keyframes (overridden by generator.js) */
+/* Base reset & fallback (generator.js で上書き) */
 * {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
 }
 
-/* Hidden until filters are injected */
 #svg-container svg {
   display: none;
 }
@@ -16,17 +15,4 @@
   50% { filter: url(#svg_filter_2); }
   75% { filter: url(#svg_filter_3); }
   100% { filter: url(#svg_filter_4); }
-}
-
-.heading {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 30px;
-}
-
-.heading img {
-  width: 100px;
-  aspect-ratio: 10/6;
-  object-fit: contain;
 }

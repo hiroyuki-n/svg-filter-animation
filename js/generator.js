@@ -1,9 +1,16 @@
+/**
+ * SVG Filter Animation Generator
+ * feTurbulence + feDisplacementMap による波打つアニメーションを生成
+ */
 (function () {
+  "use strict";
+
+  // ========== Constants ==========
   const KEYFRAME_COUNT = 5;
   const SVG_NS = "http://www.w3.org/2000/svg";
 
   const DEFAULT_STATE = {
-    baseFrequency: 0.02,
+    baseFrequency: 0.05,
     numOctaves: 3,
     turbulenceType: "fractalNoise",
     scales: [2, 6, 3, 4, 3],
@@ -12,22 +19,53 @@
     imgWidth: 100,
   };
 
-  let state = {
-    ...DEFAULT_STATE,
-    scales: [...DEFAULT_STATE.scales],
+  const PRESETS = {
+    strong: {
+      baseFrequency: 0.08,
+      numOctaves: 6,
+      turbulenceType: "turbulence",
+      scales: [8, 18, 12, 15, 8],
+      duration: 0.3,
+      imgWidth: 100,
+    },
+    weak: {
+      baseFrequency: 0.02,
+      numOctaves: 2,
+      turbulenceType: "fractalNoise",
+      scales: [1, 3, 2, 2, 1],
+      duration: 0.8,
+      imgWidth: 100,
+    },
   };
 
-  const DOM = {
-    svgContainer: () => document.getElementById("svg-container"),
-    dynamicKeyframes: () => document.getElementById("dynamic-keyframes"),
-  };
+  const PRESET_IMAGES = [
+    "img/meteor.svg",
+    "img/flag.svg",
+    "img/serif.svg",
+    "img/wallet.svg",
+    "img/thought.svg",
+    "img/heart.svg",
+    "img/hands.svg",
+    "img/mail.svg",
+  ];
 
-  function getPreviewIcons() {
-    const heading = document.querySelectorAll("#preview-heading img");
-    const uploaded = document.querySelectorAll("#uploaded-preview img");
-    return [...heading, ...uploaded];
-  }
+  const RANGE_INPUTS = [
+    { id: "baseFrequency", key: "baseFrequency", parse: Number },
+    { id: "numOctaves", key: "numOctaves", parse: Number },
+    { id: "duration", key: "duration", parse: Number },
+    { id: "imgWidth", key: "imgWidth", parse: Number },
+  ];
 
+  // ========== State ==========
+  let state = { ...DEFAULT_STATE, scales: [...DEFAULT_STATE.scales] };
+  let currentPresetSrc = null;
+  let uploadedSvgData = null;
+
+  // ========== DOM Helpers ==========
+  const $ = (sel, ctx = document) => ctx.querySelector(sel);
+  const $$ = (sel, ctx = document) => ctx.querySelectorAll(sel);
+
+  // ========== Filter / SVG Logic ==========
   function buildFilterElement(i) {
     return {
       turbulence: {
@@ -68,18 +106,6 @@
   </filter>`;
   }
 
-  function createSvgFilters() {
-    const svg = document.createElementNS(SVG_NS, "svg");
-    svg.style.cssText = "position:absolute;width:0;height:0;";
-
-    for (let i = 0; i < KEYFRAME_COUNT; i++) {
-      svg.appendChild(
-        createFilterSvgElement(buildFilterElement(i), i)
-      );
-    }
-    return svg;
-  }
-
   function getKeyframesCss() {
     return Array.from({ length: KEYFRAME_COUNT }, (_, i) => {
       const pct = (i / (KEYFRAME_COUNT - 1)) * 100;
@@ -87,15 +113,28 @@
     }).join("\n");
   }
 
+  // ========== Preview & Output ==========
+  function getPreviewIcons() {
+    return $$("#preview-heading img");
+  }
+
   function updateSvgFilters() {
-    const container = DOM.svgContainer();
+    const container = $("#svg-container");
     if (!container) return;
+
+    const svg = document.createElementNS(SVG_NS, "svg");
+    svg.style.cssText = "position:absolute;width:0;height:0;";
+
+    for (let i = 0; i < KEYFRAME_COUNT; i++) {
+      svg.appendChild(createFilterSvgElement(buildFilterElement(i), i));
+    }
+
     container.innerHTML = "";
-    container.appendChild(createSvgFilters());
+    container.appendChild(svg);
   }
 
   function updateKeyframes() {
-    let style = DOM.dynamicKeyframes();
+    let style = $("#dynamic-keyframes");
     if (!style) {
       style = document.createElement("style");
       style.id = "dynamic-keyframes";
@@ -133,8 +172,8 @@ img {
   }
 
   function updateCodeDisplay() {
-    const htmlEl = document.querySelector("#code-html code");
-    const cssEl = document.querySelector("#code-css code");
+    const htmlEl = $("#code-html code");
+    const cssEl = $("#code-css code");
     if (htmlEl) htmlEl.textContent = generateHtmlFilterCode();
     if (cssEl) cssEl.textContent = generateCssCode();
   }
@@ -146,166 +185,15 @@ img {
     updateCodeDisplay();
   }
 
-  const RANGE_INPUTS = [
-    { id: "baseFrequency", key: "baseFrequency", parse: Number },
-    { id: "numOctaves", key: "numOctaves", parse: Number },
-    { id: "duration", key: "duration", parse: Number },
-    { id: "imgWidth", key: "imgWidth", parse: Number },
-  ];
-
-  function bindRangeInput({ id, key, parse }) {
-    const el = document.getElementById(id);
-    if (!el) return;
-    el.addEventListener("input", () => {
-      state[key] = parse(el.value);
-      const valueEl = document.getElementById(`${id}-value`);
-      if (valueEl) valueEl.textContent = el.value;
-      apply();
-    });
-  }
-
-  function bindScaleInputs() {
-    for (let i = 0; i < KEYFRAME_COUNT; i++) {
-      const el = document.getElementById(`scale${i}`);
-      if (!el) continue;
-      el.addEventListener("input", () => {
-        state.scales[i] = Number(el.value);
-        const valueEl = document.getElementById(`scale${i}-value`);
-        if (valueEl) valueEl.textContent = el.value;
-        apply();
-      });
-    }
-  }
-
-  function bindRadioGroup(name, key) {
-    document.querySelectorAll(`input[name="${name}"]`).forEach((radio) => {
-      radio.addEventListener("change", () => {
-        const checked = document.querySelector(`input[name="${name}"]:checked`);
-        if (checked) state[key] = checked.value;
-        apply();
-      });
-    });
-  }
-
-  function syncStateToUI() {
-    RANGE_INPUTS.forEach(({ id, key }) => {
-      const el = document.getElementById(id);
-      const valueEl = document.getElementById(`${id}-value`);
-      if (el) el.value = state[key];
-      if (valueEl) valueEl.textContent = state[key];
-    });
-
-    document.querySelectorAll('input[name="turbulenceType"]').forEach((radio) => {
-      radio.checked = radio.value === state.turbulenceType;
-    });
-
-    const infiniteEl = document.getElementById("infinite");
-    if (infiniteEl) infiniteEl.checked = state.infinite;
-
-    for (let i = 0; i < KEYFRAME_COUNT; i++) {
-      const el = document.getElementById(`scale${i}`);
-      const valueEl = document.getElementById(`scale${i}-value`);
-      if (el) el.value = state.scales[i];
-      if (valueEl) valueEl.textContent = state.scales[i];
-    }
-  }
-
-  function reset() {
-    state = {
-      ...DEFAULT_STATE,
-      scales: [...DEFAULT_STATE.scales],
-    };
-    syncStateToUI();
-    apply();
-  }
-
-  let uploadedSvgData = null;
-
-  function init() {
-    RANGE_INPUTS.forEach(bindRangeInput);
-    bindRadioGroup("turbulenceType", "turbulenceType");
-    bindScaleInputs();
-
-    const infiniteEl = document.getElementById("infinite");
-    if (infiniteEl) {
-      infiniteEl.addEventListener("change", () => {
-        state.infinite = infiniteEl.checked;
-        apply();
-      });
-    }
-
-    document.getElementById("reset")?.addEventListener("click", reset);
-
-    function copyToClipboard(btn, text) {
-      navigator.clipboard.writeText(text).then(() => {
-        const orig = btn.textContent;
-        btn.textContent = "コピーしました！";
-        setTimeout(() => (btn.textContent = orig), 2000);
-      });
-    }
-
-    document.getElementById("copy-html")?.addEventListener("click", () => {
-      const text = document.querySelector("#code-html code")?.textContent || "";
-      copyToClipboard(document.getElementById("copy-html"), text);
-    });
-    document.getElementById("copy-css")?.addEventListener("click", () => {
-      const text = document.querySelector("#code-css code")?.textContent || "";
-      copyToClipboard(document.getElementById("copy-css"), text);
-    });
-
-    document.querySelectorAll(".download-btn[data-src]").forEach((btn) => {
-      btn.addEventListener("click", () => {
-        const src = btn.getAttribute("data-src");
-        if (src) downloadSvg(src, btn);
-      });
-    });
-
-    document.getElementById("svgUpload")?.addEventListener("change", handleSvgUpload);
-    document.getElementById("download-uploaded")?.addEventListener("click", handleDownloadUploaded);
-
-    apply();
-  }
-
-  function handleSvgUpload(e) {
-    const file = e.target.files?.[0];
-    if (!file || !file.name.toLowerCase().endsWith(".svg")) return;
-
-    const reader = new FileReader();
-    reader.onload = (ev) => {
-      const svgText = ev.target?.result;
-      if (typeof svgText !== "string") return;
-
-      uploadedSvgData = { text: svgText, name: file.name };
-      const wrap = document.getElementById("uploaded-preview");
-      if (wrap) {
-        wrap.innerHTML = "";
-        const img = document.createElement("img");
-        img.src = URL.createObjectURL(file);
-        img.alt = file.name;
-        wrap.appendChild(img);
-      }
-      document.getElementById("download-uploaded-wrap").style.display = "block";
-      apply();
-    };
-    reader.readAsText(file);
-    e.target.value = "";
-  }
-
-  function handleDownloadUploaded() {
-    if (!uploadedSvgData) return;
-    downloadSvgFromText(uploadedSvgData.text, uploadedSvgData.name);
-  }
-
+  // ========== Download ==========
   function buildAnimatedSvgContent(svg) {
     const viewBox =
       svg.getAttribute("viewBox") ||
       `0 0 ${svg.getAttribute("width") || "100"} ${svg.getAttribute("height") || "100"}`;
     const width = svg.getAttribute("width") || "100";
     const height = svg.getAttribute("height") || "100";
-
     const iter = state.infinite ? "infinite" : "1";
     const dur = `${state.duration}s`;
-
     const filters = Array.from({ length: KEYFRAME_COUNT }, (_, i) =>
       createFilterHtmlString(buildFilterElement(i), i)
     ).join("\n");
@@ -368,6 +256,183 @@ ${getKeyframesCss()}
       return;
     }
     triggerDownload(animated, filename.replace(/\.svg$/i, "_animated.svg"));
+  }
+
+  // ========== UI State ==========
+  function clearPresetActive() {
+    $$(".preset-btn").forEach((b) => b.classList.remove("active"));
+  }
+
+  function syncStateToUI() {
+    RANGE_INPUTS.forEach(({ id, key }) => {
+      const el = $(`#${id}`);
+      const valueEl = $(`#${id}-value`);
+      if (el) el.value = state[key];
+      if (valueEl) valueEl.textContent = state[key];
+    });
+
+    $$('input[name="turbulenceType"]').forEach((radio) => {
+      radio.checked = radio.value === state.turbulenceType;
+    });
+
+    for (let i = 0; i < KEYFRAME_COUNT; i++) {
+      const el = $(`#scale${i}`);
+      const valueEl = $(`#scale${i}-value`);
+      if (el) el.value = state.scales[i];
+      if (valueEl) valueEl.textContent = state.scales[i];
+    }
+  }
+
+  function applyPreset(presetId) {
+    const preset = PRESETS[presetId];
+    if (!preset) return;
+    state = { ...preset, scales: [...preset.scales], infinite: state.infinite };
+    syncStateToUI();
+    apply();
+  }
+
+  function reset() {
+    state = { ...DEFAULT_STATE, scales: [...DEFAULT_STATE.scales] };
+    clearPresetActive();
+    syncStateToUI();
+    apply();
+  }
+
+  // ========== Event Handlers ==========
+  function bindRangeInput({ id, key, parse }) {
+    const el = $(`#${id}`);
+    if (!el) return;
+    el.addEventListener("input", () => {
+      state[key] = parse(el.value);
+      const valueEl = $(`#${id}-value`);
+      if (valueEl) valueEl.textContent = el.value;
+      clearPresetActive();
+      apply();
+    });
+  }
+
+  function bindScaleInputs() {
+    for (let i = 0; i < KEYFRAME_COUNT; i++) {
+      const el = $(`#scale${i}`);
+      if (!el) continue;
+      el.addEventListener("input", () => {
+        state.scales[i] = Number(el.value);
+        const valueEl = $(`#scale${i}-value`);
+        if (valueEl) valueEl.textContent = el.value;
+        clearPresetActive();
+        apply();
+      });
+    }
+  }
+
+  function bindRadioGroup(name, key) {
+    $$(`input[name="${name}"]`).forEach((radio) => {
+      radio.addEventListener("change", () => {
+        const checked = $(`input[name="${name}"]:checked`);
+        if (checked) state[key] = checked.value;
+        clearPresetActive();
+        apply();
+      });
+    });
+  }
+
+  function handleSvgUpload(e) {
+    const file = e.target.files?.[0];
+    if (!file || !file.name.toLowerCase().endsWith(".svg")) return;
+
+    const reader = new FileReader();
+    reader.onload = (ev) => {
+      const svgText = ev.target?.result;
+      if (typeof svgText !== "string") return;
+
+      uploadedSvgData = { text: svgText, name: file.name };
+      const heading = $("#preview-heading");
+      if (heading) {
+        heading.innerHTML = "";
+        const img = document.createElement("img");
+        img.src = URL.createObjectURL(file);
+        img.alt = file.name;
+        heading.appendChild(img);
+      }
+      updateDownloadButtons();
+      apply();
+    };
+    reader.readAsText(file);
+    e.target.value = "";
+  }
+
+  function copyToClipboard(btn, text) {
+    navigator.clipboard.writeText(text).then(() => {
+      const orig = btn.innerHTML;
+      btn.innerHTML = '<i class="fa-solid fa-check"></i> コピーしました！';
+      setTimeout(() => (btn.innerHTML = orig), 2000);
+    });
+  }
+
+  // ========== Init ==========
+  function initPreviewHeading() {
+    const heading = $("#preview-heading");
+    if (!heading) return;
+    currentPresetSrc =
+      PRESET_IMAGES[Math.floor(Math.random() * PRESET_IMAGES.length)];
+    const img = document.createElement("img");
+    img.src = currentPresetSrc;
+    img.alt = "";
+    heading.appendChild(img);
+  }
+
+  function updateDownloadButtons() {
+    const container = $("#download-buttons");
+    if (!container) return;
+    container.innerHTML = "";
+
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.className = "download-btn";
+
+    if (uploadedSvgData) {
+      btn.textContent = "アップロード画像をダウンロード";
+      btn.addEventListener("click", () =>
+        downloadSvgFromText(uploadedSvgData.text, uploadedSvgData.name)
+      );
+    } else if (currentPresetSrc) {
+      btn.textContent = currentPresetSrc.replace("img/", "");
+      btn.setAttribute("data-src", currentPresetSrc);
+      btn.addEventListener("click", () => downloadSvg(currentPresetSrc, btn));
+    }
+
+    if (btn.textContent) container.appendChild(btn);
+  }
+
+  function init() {
+    RANGE_INPUTS.forEach(bindRangeInput);
+    bindRadioGroup("turbulenceType", "turbulenceType");
+    bindScaleInputs();
+
+    $("#reset")?.addEventListener("click", reset);
+
+    $$(".preset-btn").forEach((btn) => {
+      btn.addEventListener("click", () => {
+        clearPresetActive();
+        btn.classList.add("active");
+        applyPreset(btn.getAttribute("data-preset"));
+      });
+    });
+
+    $("#copy-html")?.addEventListener("click", () => {
+      const text = $("#code-html code")?.textContent || "";
+      copyToClipboard($("#copy-html"), text);
+    });
+    $("#copy-css")?.addEventListener("click", () => {
+      const text = $("#code-css code")?.textContent || "";
+      copyToClipboard($("#copy-css"), text);
+    });
+
+    $("#svgUpload")?.addEventListener("change", handleSvgUpload);
+
+    initPreviewHeading();
+    updateDownloadButtons();
+    apply();
   }
 
   init();

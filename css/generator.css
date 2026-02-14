@@ -1,4 +1,8 @@
-/* ===== CSS Variables ===== */
+/* ========================================
+   SVG Filter Animation Generator - Styles
+   ======================================== */
+
+/* ---------- Variables ---------- */
 :root {
   --color-bg: #1a1a2e;
   --color-bg-controls: #16213e;
@@ -17,9 +21,10 @@
   --spacing-sm: 8px;
   --spacing-md: 16px;
   --spacing-lg: 24px;
+  --content-max-width: 900px;
 }
 
-/* ===== Base ===== */
+/* ---------- Base ---------- */
 html {
   overflow-x: hidden;
 }
@@ -40,7 +45,7 @@ body {
   overflow: hidden;
 }
 
-/* ===== Layout ===== */
+/* ---------- Layout ---------- */
 .generator {
   display: flex;
   min-height: 100vh;
@@ -52,6 +57,14 @@ body {
   padding: var(--spacing-lg);
   background: var(--color-bg-controls);
   overflow-y: auto;
+  text-align: left;
+}
+
+.controls h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: var(--spacing-lg);
+  line-height: 1.4;
 }
 
 .preview {
@@ -65,7 +78,7 @@ body {
   min-width: 0;
 }
 
-/* ===== Control Groups ===== */
+/* ---------- Control Groups ---------- */
 .control-group {
   margin-bottom: var(--spacing-lg);
 }
@@ -73,6 +86,8 @@ body {
 .control-group h2 {
   display: flex;
   align-items: center;
+  justify-content: flex-start;
+  gap: 6px;
   font-size: 0.75rem;
   font-weight: 600;
   text-transform: uppercase;
@@ -82,7 +97,6 @@ body {
 }
 
 .control-group h2 i {
-  margin-right: 6px;
   opacity: 0.8;
   width: 1em;
 }
@@ -100,7 +114,7 @@ body {
 
 .control label {
   display: flex;
-  justify-content: space-between;
+  justify-content: flex-start;
   align-items: center;
   font-size: 0.875rem;
   margin-bottom: 4px;
@@ -112,14 +126,8 @@ body {
   width: 1em;
 }
 
-.control label i:not(:first-child) {
-  margin-left: 4px;
-  margin-right: 6px;
-  opacity: 0.8;
-  width: 1em;
-}
-
 .control .value {
+  margin-left: auto;
   font-family: monospace;
   font-size: 0.8rem;
   color: var(--color-value);
@@ -132,7 +140,7 @@ body {
   margin-top: 6px;
 }
 
-/* ===== Form Controls ===== */
+/* ---------- Form Controls ---------- */
 .control input[type="range"] {
   width: 100%;
   height: 6px;
@@ -167,7 +175,39 @@ body {
   cursor: pointer;
 }
 
-/* ===== Radio Group ===== */
+/* ---------- Preset Buttons ---------- */
+.preset-buttons {
+  display: flex;
+  gap: var(--spacing-sm);
+  flex-wrap: wrap;
+}
+
+.preset-btn {
+  flex: 1;
+  min-width: 80px;
+  padding: 10px 14px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  background: var(--color-bg-input);
+  color: #e2e8f0;
+  border: 1px solid var(--color-border);
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.preset-btn:hover {
+  background: var(--color-border);
+}
+
+.preset-btn:active,
+.preset-btn.active {
+  border-color: var(--color-accent);
+  background: rgba(59, 130, 246, 0.2);
+  color: var(--color-accent);
+}
+
+/* ---------- Radio Group ---------- */
 .radio-group {
   display: flex;
   gap: var(--spacing-sm);
@@ -197,7 +237,19 @@ body {
   color: var(--color-accent);
 }
 
-/* ===== Upload ===== */
+/* ---------- Utilities ---------- */
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+/* ---------- Upload ---------- */
 .upload-label {
   display: block;
   cursor: pointer;
@@ -218,7 +270,7 @@ body {
   opacity: 0.9;
 }
 
-/* ===== Actions ===== */
+/* ---------- Actions ---------- */
 .actions {
   display: flex;
   gap: var(--spacing-sm);
@@ -249,14 +301,7 @@ body {
   color: #fff;
 }
 
-/* ===== Preview Section ===== */
-.controls h1 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: var(--spacing-lg);
-  line-height: 1.4;
-}
-
+/* ---------- Preview ---------- */
 .preview .icons-section {
   background: var(--color-preview-bg);
   padding: 60px;
@@ -264,51 +309,112 @@ body {
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
 }
 
-.uploaded-preview {
+.heading {
   display: flex;
   flex-wrap: wrap;
   justify-content: center;
   gap: 30px;
-  margin-top: 20px;
-  padding-top: 20px;
-  border-top: 1px dashed var(--color-text-muted);
 }
 
-.uploaded-preview img {
+.heading img {
   width: 100px;
   aspect-ratio: 10/6;
   object-fit: contain;
 }
 
-.hint {
-  margin-top: var(--spacing-lg);
-  font-size: 0.875rem;
-  color: var(--color-text-muted);
-}
-
-/* ===== Code Copy Section ===== */
-.code-copy-section {
+/* ---------- Output Sections (共通) ---------- */
+.code-copy-section,
+.output-guide,
+.download-section {
   width: 100%;
-  max-width: 900px;
-  margin-top: 40px;
+  max-width: var(--content-max-width);
   min-width: 0;
 }
 
-.code-copy-section h3 {
+.code-copy-section {
+  margin-top: 40px;
+}
+
+.output-guide {
+  margin-top: 32px;
+  padding: var(--spacing-md);
+  background: rgba(59, 130, 246, 0.08);
+  border: 1px solid rgba(59, 130, 246, 0.2);
+  border-radius: var(--radius-md);
+}
+
+.output-guide h4 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--color-accent);
+  margin: 0 0 var(--spacing-sm);
+}
+
+.output-guide ul {
+  margin: 0;
+  padding-left: 1.2em;
+  font-size: 0.8rem;
+  color: var(--color-text-muted);
+  line-height: 1.7;
+}
+
+.output-guide li {
+  margin-bottom: 4px;
+}
+
+.output-guide li:last-child {
+  margin-bottom: 0;
+}
+
+.code-copy-section h3,
+.download-section h3 {
+  display: flex;
+  align-items: center;
+  gap: 6px;
   font-size: 0.875rem;
   font-weight: 600;
   color: var(--color-text-muted);
+  margin-bottom: var(--spacing-sm);
+}
+
+.download-section {
+  margin-top: 40px;
+}
+
+.section-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  line-height: 1.6;
   margin-bottom: var(--spacing-md);
 }
 
+.section-desc code {
+  font-size: 0.85em;
+  padding: 1px 4px;
+  background: var(--color-bg-input);
+  border-radius: 3px;
+}
+
+/* ---------- Code Block ---------- */
 .code-block {
   margin-bottom: 20px;
+}
+
+.code-label-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 6px;
 }
 
 .code-block .code-label {
   font-size: 0.75rem;
   color: var(--color-text-dim);
-  margin-bottom: 6px;
+  margin: 0;
 }
 
 .code-block pre {
@@ -328,7 +434,10 @@ body {
 }
 
 .code-block .copy-btn {
-  margin-top: var(--spacing-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  flex-shrink: 0;
   padding: 6px 14px;
   font-size: 0.8rem;
   background: var(--color-accent);
@@ -342,31 +451,7 @@ body {
   opacity: 0.9;
 }
 
-/* ===== Download Section ===== */
-.download-section {
-  width: 100%;
-  max-width: 640px;
-  margin-top: 40px;
-  min-width: 0;
-}
-
-.download-section h3 {
-  font-size: 0.875rem;
-  font-weight: 600;
-  color: var(--color-text-muted);
-  margin-bottom: var(--spacing-sm);
-}
-
-.download-hint {
-  font-size: 0.8rem;
-  color: var(--color-text-dim);
-  margin-bottom: var(--spacing-md);
-}
-
-.download-uploaded {
-  margin-bottom: var(--spacing-md);
-}
-
+/* ---------- Download ---------- */
 .download-buttons {
   display: flex;
   flex-wrap: wrap;
@@ -392,7 +477,7 @@ body {
   cursor: not-allowed;
 }
 
-/* ===== Responsive ===== */
+/* ---------- Responsive ---------- */
 @media (max-width: 768px) {
   .generator {
     flex-direction: column;

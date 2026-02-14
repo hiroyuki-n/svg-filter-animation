@@ -15,15 +15,24 @@
     <aside class="controls">
       <h1>SVGアニメーション<br>ジェネレーター</h1>
 
+      <section class="control-group preset-group">
+        <h2><i class="fa-solid fa-sliders"></i> プリセット</h2>
+        <div class="preset-buttons">
+          <button type="button" class="preset-btn" data-preset="strong">強め</button>
+          <button type="button" class="preset-btn" data-preset="weak">弱め</button>
+        </div>
+        <p class="control-desc">ワンクリックでよく使う組み合わせを適用します。</p>
+      </section>
+
       <section class="control-group">
         <h2><i class="fa-solid fa-wave-square"></i> feTurbulence</h2>
         <p class="control-group-desc">ノイズパターンを生成するフィルター。波打つ効果の「元」となる模様を制御します。</p>
         <div class="control">
           <label>
             <i class="fa-solid fa-sliders"></i> baseFrequency
-            <span class="value" id="baseFrequency-value">0.02</span>
+            <span class="value" id="baseFrequency-value">0.05</span>
           </label>
-          <input type="range" id="baseFrequency" min="0.001" max="0.2" step="0.001" value="0.02">
+          <input type="range" id="baseFrequency" min="0.001" max="0.2" step="0.001" value="0.05">
           <p class="control-desc">ノイズの細かさ。小さいほど滑らかでゆったり、大きいほど細かく荒い模様になります。</p>
         </div>
         <div class="control">
@@ -31,7 +40,7 @@
             <i class="fa-solid fa-layer-group"></i> numOctaves
             <span class="value" id="numOctaves-value">3</span>
           </label>
-          <input type="range" id="numOctaves" min="1" max="10" step="1" value="3">
+          <input type="range" id="numOctaves" min="1" max="20" step="1" value="3">
           <p class="control-desc">ノイズの重ね合わせ数。多いほど複雑でディテールの多い模様になります。</p>
         </div>
         <div class="control">
@@ -83,9 +92,9 @@
       <section class="control-group">
         <h2><i class="fa-solid fa-image"></i> 画像</h2>
         <div class="control">
-          <label class="upload-label">
+          <label class="upload-label" for="svgUpload">
             <span class="upload-btn"><i class="fa-solid fa-upload"></i> SVGをアップロード</span>
-            <input type="file" id="svgUpload" accept=".svg,image/svg+xml" style="display:none">
+            <input type="file" id="svgUpload" class="visually-hidden" accept=".svg,image/svg+xml" aria-label="SVGファイルをアップロード">
           </label>
           <p class="control-desc">別の.svgファイルを読み込んでプレビュー・ダウンロードできます。</p>
         </div>
@@ -98,7 +107,7 @@
             <i class="fa-solid fa-arrows-left-right"></i> 画像の横幅（px）
             <span class="value" id="imgWidth-value">100</span>
           </label>
-          <input type="range" id="imgWidth" min="40" max="300" step="5" value="100">
+          <input type="range" id="imgWidth" min="40" max="600" step="5" value="100">
           <p class="control-desc">プレビューアイコンの表示サイズ。生成コードにも反映されます。</p>
         </div>
       </section>
@@ -113,13 +122,6 @@
           <input type="range" id="duration" min="0.1" max="3" step="0.1" value="0.5">
           <p class="control-desc">1サイクル（0%→100%）にかかる時間。短いほど速く、長いほどゆっくり動きます。</p>
         </div>
-        <div class="control">
-          <label>
-            <input type="checkbox" id="infinite" checked>
-            <i class="fa-solid fa-repeat"></i> 無限ループ
-          </label>
-          <p class="control-desc">オンで繰り返し再生、オフで1回のみ再生します。</p>
-        </div>
       </section>
 
       <section class="control-group actions">
@@ -129,50 +131,40 @@
 
     <main class="preview">
       <section class="icons-section">
-        <div class="heading" id="preview-heading">
-          <img src="img/meteor.svg" alt="">
-          <img src="img/flag.svg" alt="">
-          <img src="img/serif.svg" alt="">
-          <img src="img/wallet.svg" alt="">
-          <img src="img/thought.svg" alt="">
-          <img src="img/heart.svg" alt="">
-          <img src="img/hands.svg" alt="">
-          <img src="img/mail.svg" alt="">
-        </div>
-        <div class="uploaded-preview" id="uploaded-preview"></div>
+        <div class="heading" id="preview-heading"></div>
       </section>
-      <p class="hint">左のパラメータを変更するとプレビューが即座に更新されます</p>
+
+      <div class="output-guide">
+        <h4><i class="fa-solid fa-circle-question"></i> 使い分け</h4>
+        <ul>
+          <li><strong>HTML / CSS をコピー</strong> … 既存のWebページに組み込みたいとき。画像は別ファイルで管理。</li>
+          <li><strong>SVGをダウンロード</strong> … 1つのファイルで完結させたいとき。どこにでもそのまま配置可能。</li>
+        </ul>
+      </div>
 
       <section class="code-copy-section">
-        <h3>HTML / CSS をコピー</h3>
+        <h3><i class="fa-solid fa-code"></i> HTML / CSS をコピー</h3>
+        <p class="section-desc">Webページに組み込む場合に使います。HTML（フィルター定義）を&lt;/body&gt;直前に、CSS（アニメーション）をスタイルシートに貼り付けて、既存の<code>img</code>タグに適用します。画像ファイルは別途用意してください。</p>
         <div class="code-block">
-          <p class="code-label">HTML（&lt;/body&gt;直前に配置）</p>
+          <div class="code-label-row">
+            <p class="code-label">HTML（&lt;/body&gt;直前に配置）</p>
+            <button type="button" class="copy-btn" id="copy-html"><i class="fa-solid fa-copy"></i> コピー</button>
+          </div>
           <pre id="code-html"><code></code></pre>
-          <button type="button" class="copy-btn" id="copy-html">コピー</button>
         </div>
         <div class="code-block">
-          <p class="code-label">CSS</p>
+          <div class="code-label-row">
+            <p class="code-label">CSS</p>
+            <button type="button" class="copy-btn" id="copy-css"><i class="fa-solid fa-copy"></i> コピー</button>
+          </div>
           <pre id="code-css"><code></code></pre>
-          <button type="button" class="copy-btn" id="copy-css">コピー</button>
         </div>
       </section>
 
       <section class="download-section">
-        <h3>SVGをダウンロード</h3>
-        <p class="download-hint">SMILアニメーションが埋め込まれた.svgファイル。単体でアニメーションします。</p>
-        <div class="download-uploaded" id="download-uploaded-wrap" style="display:none">
-          <button type="button" class="download-btn download-uploaded-btn" id="download-uploaded">アップロード画像をダウンロード</button>
-        </div>
-        <div class="download-buttons">
-          <button type="button" class="download-btn" data-src="img/meteor.svg">meteor.svg</button>
-          <button type="button" class="download-btn" data-src="img/flag.svg">flag.svg</button>
-          <button type="button" class="download-btn" data-src="img/serif.svg">serif.svg</button>
-          <button type="button" class="download-btn" data-src="img/wallet.svg">wallet.svg</button>
-          <button type="button" class="download-btn" data-src="img/thought.svg">thought.svg</button>
-          <button type="button" class="download-btn" data-src="img/heart.svg">heart.svg</button>
-          <button type="button" class="download-btn" data-src="img/hands.svg">hands.svg</button>
-          <button type="button" class="download-btn" data-src="img/mail.svg">mail.svg</button>
-        </div>
+        <h3><i class="fa-solid fa-file-arrow-down"></i> SVGをダウンロード</h3>
+        <p class="section-desc">アニメーションが埋め込まれた.svgファイルを取得します。単体で再生でき、<code>img</code>のsrc・背景画像・メール添付など、どこでもそのまま使えます。HTML/CSSの追加は不要です。</p>
+        <div class="download-buttons" id="download-buttons"></div>
       </section>
 
     </main>
