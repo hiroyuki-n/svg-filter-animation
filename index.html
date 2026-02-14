@@ -18,10 +18,13 @@
       <section class="control-group preset-group">
         <h2><i class="fa-solid fa-sliders"></i> プリセット</h2>
         <div class="preset-buttons">
-          <button type="button" class="preset-btn" data-preset="strong">強め</button>
-          <button type="button" class="preset-btn" data-preset="weak">弱め</button>
+          <button type="button" class="preset-btn" data-preset="strength1">1</button>
+          <button type="button" class="preset-btn" data-preset="strength2">2</button>
+          <button type="button" class="preset-btn" data-preset="strength3">3</button>
+          <button type="button" class="preset-btn" data-preset="strength4">4</button>
+          <button type="button" class="preset-btn" data-preset="strength5">5</button>
         </div>
-        <p class="control-desc">ワンクリックでよく使う組み合わせを適用します。</p>
+        <p class="preset-legend">1=弱い 〜 5=強い</p>
       </section>
 
       <section class="control-group">
@@ -44,7 +47,7 @@
           <p class="control-desc">ノイズの重ね合わせ数。多いほど複雑でディテールの多い模様になります。</p>
         </div>
         <div class="control">
-          <label><i class="fa-solid fa-toggle-on"></i> type</label>
+          <label><i class="fa-solid fa-filter"></i> type</label>
           <div class="radio-group">
             <label class="radio-option">
               <input type="radio" name="turbulenceType" value="fractalNoise" checked>
@@ -63,27 +66,27 @@
         <h2><i class="fa-solid fa-arrows-up-down-left-right"></i> feDisplacementMap scale</h2>
         <p class="control-group-desc">ノイズに基づいて画像を変形する強さ。アニメーションは5つのキーフレーム（0%・25%・50%・75%・100%）で切り替わります。</p>
         <div class="control" data-filter="0">
-          <label><i class="fa-solid fa-circle"></i> Filter 0（0%） <span class="value" id="scale0-value">2</span></label>
+          <label><i class="fa-solid fa-flag"></i> Filter 0（0%） <span class="value" id="scale0-value">2</span></label>
           <input type="range" id="scale0" min="0" max="50" step="1" value="2">
           <p class="control-desc">開始時の変形量。0で変形なし。</p>
         </div>
         <div class="control" data-filter="1">
-          <label><i class="fa-solid fa-circle"></i> Filter 1（25%） <span class="value" id="scale1-value">6</span></label>
+          <label><i class="fa-solid fa-flag"></i> Filter 1（25%） <span class="value" id="scale1-value">6</span></label>
           <input type="range" id="scale1" min="0" max="50" step="1" value="6">
           <p class="control-desc">1/4地点の変形量。大きいほど波打ちが強く。</p>
         </div>
         <div class="control" data-filter="2">
-          <label><i class="fa-solid fa-circle"></i> Filter 2（50%） <span class="value" id="scale2-value">3</span></label>
+          <label><i class="fa-solid fa-flag"></i> Filter 2（50%） <span class="value" id="scale2-value">3</span></label>
           <input type="range" id="scale2" min="0" max="50" step="1" value="3">
           <p class="control-desc">中間地点の変形量。</p>
         </div>
         <div class="control" data-filter="3">
-          <label><i class="fa-solid fa-circle"></i> Filter 3（75%） <span class="value" id="scale3-value">4</span></label>
+          <label><i class="fa-solid fa-flag"></i> Filter 3（75%） <span class="value" id="scale3-value">4</span></label>
           <input type="range" id="scale3" min="0" max="50" step="1" value="4">
           <p class="control-desc">3/4地点の変形量。</p>
         </div>
         <div class="control" data-filter="4">
-          <label><i class="fa-solid fa-circle"></i> Filter 4（100%） <span class="value" id="scale4-value">3</span></label>
+          <label><i class="fa-solid fa-flag"></i> Filter 4（100%） <span class="value" id="scale4-value">3</span></label>
           <input type="range" id="scale4" min="0" max="50" step="1" value="3">
           <p class="control-desc">終了時の変形量。0にすると開始に戻る動きに。</p>
         </div>

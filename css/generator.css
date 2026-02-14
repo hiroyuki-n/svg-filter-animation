@@ -179,12 +179,12 @@ body {
 .preset-buttons {
   display: flex;
   gap: var(--spacing-sm);
-  flex-wrap: wrap;
+  flex-wrap: nowrap;
 }
 
 .preset-btn {
   flex: 1;
-  min-width: 80px;
+  min-width: 0;
   padding: 10px 14px;
   font-size: 0.875rem;
   font-weight: 500;
@@ -205,6 +205,12 @@ body {
   border-color: var(--color-accent);
   background: rgba(59, 130, 246, 0.2);
   color: var(--color-accent);
+}
+
+.preset-legend {
+  font-size: 0.7rem;
+  color: var(--color-text-dim);
+  margin-top: 6px;
 }
 
 /* ---------- Radio Group ---------- */

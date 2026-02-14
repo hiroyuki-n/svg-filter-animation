@@ -20,20 +20,39 @@
   };
 
   const PRESETS = {
-    strong: {
-      baseFrequency: 0.08,
-      numOctaves: 6,
-      turbulenceType: "turbulence",
-      scales: [8, 18, 12, 15, 8],
-      duration: 0.3,
-      imgWidth: 100,
-    },
-    weak: {
+    strength1: {
       baseFrequency: 0.02,
       numOctaves: 2,
       turbulenceType: "fractalNoise",
-      scales: [1, 3, 2, 2, 1],
-      duration: 0.8,
+      scales: [0, 2, 1, 2, 1],
+      imgWidth: 100,
+    },
+    strength2: {
+      baseFrequency: 0.03,
+      numOctaves: 2,
+      turbulenceType: "fractalNoise",
+      scales: [1, 4, 2, 3, 2],
+      imgWidth: 100,
+    },
+    strength3: {
+      baseFrequency: 0.05,
+      numOctaves: 3,
+      turbulenceType: "fractalNoise",
+      scales: [2, 6, 3, 5, 4],
+      imgWidth: 100,
+    },
+    strength4: {
+      baseFrequency: 0.06,
+      numOctaves: 4,
+      turbulenceType: "fractalNoise",
+      scales: [4, 10, 6, 9, 6],
+      imgWidth: 100,
+    },
+    strength5: {
+      baseFrequency: 0.08,
+      numOctaves: 6,
+      turbulenceType: "turbulence",
+      scales: [8, 18, 12, 16, 10],
       imgWidth: 100,
     },
   };
@@ -286,7 +305,12 @@ ${getKeyframesCss()}
   function applyPreset(presetId) {
     const preset = PRESETS[presetId];
     if (!preset) return;
-    state = { ...preset, scales: [...preset.scales], infinite: state.infinite };
+    state = {
+      ...state,
+      ...preset,
+      scales: [...(preset.scales || state.scales)],
+      infinite: state.infinite,
+    };
     syncStateToUI();
     apply();
   }
