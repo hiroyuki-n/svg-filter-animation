@@ -1,0 +1,320 @@
+html {
+  overflow-x: hidden;
+}
+
+#svg-container svg {
+  display: block !important;
+  position: absolute;
+  width: 0;
+  height: 0;
+  overflow: hidden;
+}
+
+body {
+  font-family: "Helvetica Neue", Arial, "Hiragino Kaku Gothic ProN", "Hiragino Sans", Meiryo, sans-serif;
+  background: #1a1a2e;
+  color: #eee;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.generator {
+  display: flex;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.controls {
+  width: 320px;
+  padding: 24px;
+  background: #16213e;
+  overflow-y: auto;
+}
+
+.controls h1 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  margin-bottom: 24px;
+  line-height: 1.4;
+}
+
+.control-group {
+  margin-bottom: 24px;
+}
+
+.control-group h2 {
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.control-group-desc {
+  font-size: 0.75rem;
+  color: #64748b;
+  line-height: 1.5;
+  margin-bottom: 12px;
+}
+
+.control {
+  margin-bottom: 12px;
+}
+
+.control label {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.875rem;
+  margin-bottom: 4px;
+}
+
+.control .value {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: #fbbf24;
+}
+
+.control-desc {
+  font-size: 0.7rem;
+  color: #64748b;
+  line-height: 1.4;
+  margin-top: 6px;
+}
+
+.control input[type="range"] {
+  width: 100%;
+  height: 6px;
+  -webkit-appearance: none;
+  appearance: none;
+  background: #334155;
+  border-radius: 3px;
+}
+
+.control input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 16px;
+  height: 16px;
+  background: #3b82f6;
+  border-radius: 50%;
+  cursor: pointer;
+}
+
+.control input[type="checkbox"] {
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.control select {
+  width: 100%;
+  padding: 8px 12px;
+  font-size: 0.875rem;
+  background: #334155;
+  color: #e2e8f0;
+  border: 1px solid #475569;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.upload-label {
+  display: block;
+  cursor: pointer;
+}
+
+.upload-btn {
+  display: inline-block;
+  padding: 8px 16px;
+  font-size: 0.875rem;
+  background: #3b82f6;
+  color: #fff;
+  border-radius: 6px;
+}
+
+.upload-btn:hover {
+  opacity: 0.9;
+}
+
+.actions {
+  display: flex;
+  gap: 8px;
+  margin-top: 24px;
+}
+
+.actions button {
+  flex: 1;
+  padding: 10px 16px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.actions button:hover {
+  opacity: 0.9;
+}
+
+#reset {
+  background: #475569;
+  color: #fff;
+}
+
+.preview {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 40px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  min-width: 0;
+}
+
+.preview .icons-section {
+  background: #f6f1eb;
+  padding: 60px;
+  border-radius: 16px;
+  box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.uploaded-preview {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 30px;
+  margin-top: 20px;
+  padding-top: 20px;
+  border-top: 1px dashed #94a3b8;
+}
+
+.uploaded-preview img {
+  width: 100px;
+  aspect-ratio: 10/6;
+  object-fit: contain;
+}
+
+.download-uploaded {
+  margin-bottom: 16px;
+}
+
+.hint {
+  margin-top: 24px;
+  font-size: 0.875rem;
+  color: #94a3b8;
+}
+
+.code-copy-section {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 40px;
+  min-width: 0;
+}
+
+.code-copy-section h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 16px;
+}
+
+.code-block {
+  margin-bottom: 20px;
+}
+
+.code-block .code-label {
+  font-size: 0.75rem;
+  color: #64748b;
+  margin-bottom: 6px;
+}
+
+.code-block pre {
+  background: #0f172a;
+  border-radius: 8px;
+  padding: 16px;
+  overflow-x: hidden;
+  font-family: "Monaco", "Menlo", "Consolas", monospace;
+  font-size: 0.8rem;
+  line-height: 1.5;
+  color: #e2e8f0;
+}
+
+.code-block code {
+  white-space: pre-wrap;
+  overflow-wrap: break-word;
+}
+
+.code-block .copy-btn {
+  margin-top: 8px;
+  padding: 6px 14px;
+  font-size: 0.8rem;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.code-block .copy-btn:hover {
+  opacity: 0.9;
+}
+
+.download-section {
+  width: 100%;
+  max-width: 640px;
+  margin-top: 40px;
+  min-width: 0;
+}
+
+.download-section h3 {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #94a3b8;
+  margin-bottom: 8px;
+}
+
+.download-hint {
+  font-size: 0.8rem;
+  color: #64748b;
+  margin-bottom: 16px;
+}
+
+.download-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.download-btn {
+  padding: 8px 14px;
+  font-size: 0.8rem;
+  background: #334155;
+  color: #e2e8f0;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.download-btn:hover:not(:disabled) {
+  background: #475569;
+}
+
+.download-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .generator {
+    flex-direction: column;
+  }
+
+  .controls {
+    width: 100%;
+  }
+
+  .preview .icons-section {
+    padding: 40px;
+  }
+}
