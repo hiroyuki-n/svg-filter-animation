@@ -360,6 +360,12 @@ ${getKeyframesCss()}
     });
   }
 
+  function updateUploadStatus() {
+    const el = $("#upload-status");
+    if (!el) return;
+    el.textContent = uploadedSvgData ? uploadedSvgData.name : "選択されていません";
+  }
+
   function handleSvgUpload(e) {
     const file = e.target.files?.[0];
     if (!file || !file.name.toLowerCase().endsWith(".svg")) return;
@@ -378,6 +384,7 @@ ${getKeyframesCss()}
         img.alt = file.name;
         heading.appendChild(img);
       }
+      updateUploadStatus();
       updateDownloadButtons();
       apply();
     };
@@ -455,6 +462,7 @@ ${getKeyframesCss()}
     $("#svgUpload")?.addEventListener("change", handleSvgUpload);
 
     initPreviewHeading();
+    updateUploadStatus();
     updateDownloadButtons();
     apply();
   }

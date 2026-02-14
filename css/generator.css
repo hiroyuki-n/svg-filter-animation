@@ -60,13 +60,6 @@ body {
   text-align: left;
 }
 
-.controls h1 {
-  font-size: 1.1rem;
-  font-weight: 600;
-  margin-bottom: var(--spacing-lg);
-  line-height: 1.4;
-}
-
 .preview {
   flex: 1;
   display: flex;
@@ -134,7 +127,7 @@ body {
 }
 
 .control-desc {
-  font-size: 0.7rem;
+  font-size: 13px;
   color: var(--color-text-dim);
   line-height: 1.4;
   margin-top: 6px;
@@ -313,6 +306,27 @@ body {
   padding: 60px;
   border-radius: var(--radius-lg);
   box-shadow: 0 4px 24px rgba(0, 0, 0, 0.3);
+}
+
+.preview-upload {
+  text-align: center;
+  margin-top: var(--spacing-lg);
+}
+
+.preview-upload .upload-label {
+  display: inline-block;
+}
+
+.upload-status {
+  font-size: 0.875rem;
+  color: var(--color-text-dim);
+  margin: var(--spacing-sm) 0 4px;
+}
+
+.upload-desc {
+  font-size: 0.8rem;
+  color: var(--color-text-dim);
+  margin: 0;
 }
 
 .heading {
