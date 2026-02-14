@@ -22,7 +22,6 @@
           <button type="button" class="preset-btn" data-preset="strength4">4</button>
           <button type="button" class="preset-btn" data-preset="strength5">5</button>
         </div>
-        <p class="preset-legend">1=弱い 〜 5=強い</p>
       </section>
 
       <section class="control-group">
@@ -66,27 +65,22 @@
         <div class="control" data-filter="0">
           <label><i class="fa-solid fa-flag"></i> Filter 0（0%） <span class="value" id="scale0-value">2</span></label>
           <input type="range" id="scale0" min="0" max="50" step="1" value="2">
-          <p class="control-desc">開始時の変形量。0で変形なし。</p>
         </div>
         <div class="control" data-filter="1">
           <label><i class="fa-solid fa-flag"></i> Filter 1（25%） <span class="value" id="scale1-value">6</span></label>
           <input type="range" id="scale1" min="0" max="50" step="1" value="6">
-          <p class="control-desc">1/4地点の変形量。大きいほど波打ちが強く。</p>
         </div>
         <div class="control" data-filter="2">
           <label><i class="fa-solid fa-flag"></i> Filter 2（50%） <span class="value" id="scale2-value">3</span></label>
           <input type="range" id="scale2" min="0" max="50" step="1" value="3">
-          <p class="control-desc">中間地点の変形量。</p>
         </div>
         <div class="control" data-filter="3">
           <label><i class="fa-solid fa-flag"></i> Filter 3（75%） <span class="value" id="scale3-value">4</span></label>
           <input type="range" id="scale3" min="0" max="50" step="1" value="4">
-          <p class="control-desc">3/4地点の変形量。</p>
         </div>
         <div class="control" data-filter="4">
           <label><i class="fa-solid fa-flag"></i> Filter 4（100%） <span class="value" id="scale4-value">3</span></label>
           <input type="range" id="scale4" min="0" max="50" step="1" value="3">
-          <p class="control-desc">終了時の変形量。0にすると開始に戻る動きに。</p>
         </div>
       </section>
 
@@ -97,7 +91,6 @@
             <span class="value" id="imgWidth-value">200</span>
           </label>
           <input type="range" id="imgWidth" min="40" max="600" step="5" value="200">
-          <p class="control-desc">プレビューアイコンの表示サイズ。生成コードにも反映されます。</p>
         </div>
       </section>
 
@@ -108,7 +101,6 @@
             <span class="value" id="duration-value">0.5</span>
           </label>
           <input type="range" id="duration" min="0.1" max="3" step="0.1" value="0.5">
-          <p class="control-desc">1サイクル（0%→100%）にかかる時間。短いほど速く、長いほどゆっくり動きます。</p>
         </div>
       </section>
 
@@ -118,6 +110,7 @@
     </aside>
 
     <main class="preview">
+      <h1 class="preview-title">SVG Filter Animation</h1>
       <section class="icons-section">
         <div class="heading" id="preview-heading"></div>
       </section>
@@ -132,7 +125,7 @@
 
       <section class="code-copy-section">
         <h3><i class="fa-solid fa-code"></i> HTML / CSS をコピー</h3>
-        <p class="section-desc">Webページに組み込む場合に使います。HTML（フィルター定義）を&lt;/body&gt;直前に、CSS（アニメーション）をスタイルシートに貼り付けて、既存の<code>img</code>タグに適用します。画像ファイルは別途用意してください。</p>
+        <p class="section-desc"><strong>ダウンロード不要。</strong>コピーするだけで使えます。HTML（フィルター定義）を&lt;/body&gt;直前に、CSS（アニメーション）をスタイルシートに貼り付けて、既存の<code>img</code>タグに適用します。画像ファイルは別途用意してください。</p>
         <div class="code-block">
           <div class="code-label-row">
             <p class="code-label">HTML（&lt;/body&gt;直前に配置）</p>
@@ -152,7 +145,7 @@
       <div class="output-guide">
         <h4><i class="fa-solid fa-circle-question"></i> 使い分け</h4>
         <ul>
-          <li><strong>HTML / CSS をコピー</strong> … 既存のWebページに組み込みたいとき。画像は別ファイルで管理。</li>
+          <li><strong>HTML / CSS をコピー</strong> … ダウンロード不要。コピーするだけで既存のWebページに組み込めます。画像は別ファイルで管理。</li>
           <li><strong>SVGをダウンロード</strong> … 1つのファイルで完結させたいとき。どこにでもそのまま配置可能。</li>
         </ul>
       </div>

@@ -201,12 +201,6 @@ body {
   color: var(--color-accent);
 }
 
-.preset-legend {
-  font-size: 0.7rem;
-  color: var(--color-text-dim);
-  margin-top: 6px;
-}
-
 /* ---------- Radio Group ---------- */
 .radio-group {
   display: flex;
@@ -302,11 +296,18 @@ body {
 }
 
 /* ---------- Preview ---------- */
+.preview-title {
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: var(--color-text);
+  margin: 0 0 var(--spacing-md);
+  text-align: center;
+}
+
 .preview .icons-section {
   background: var(--color-preview-bg);
   padding: 60px;
   border-radius: var(--radius-lg);
-  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
   border: 1px solid var(--color-border);
 }
 
